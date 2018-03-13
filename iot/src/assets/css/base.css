@@ -1,0 +1,215 @@
+/*pages页面布局*/
+.wrapper {
+  padding: 15px;
+  background-color: #fff;
+}
+section {
+  border: 1px solid #e9e9e9;
+  margin-bottom: 20px;
+}
+section:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: transparent;
+}
+/*最后一个section*/
+.last {
+  margin-bottom: 0;
+}
+
+/*main页面*/
+main {
+  border: 1px solid #e9e9e9;
+  margin: 15px;
+}
+main:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: transparent;
+}
+
+/*section里面布局*/
+header {
+  text-align: left;
+  border-bottom: 1px solid #e9e9e9;
+}
+header span {
+  margin: 20px;
+  line-height: 40px;
+  height: 40px;
+  font-weight: bold;
+}
+.double-span {
+  margin: 20px 0;
+  padding: 0 20px;
+  cursor: pointer;
+}
+.double-span:active {
+  color: orange;
+}
+.main-content {
+  margin: 20px 20px 0 20px;
+  text-align: left;
+}
+/*表单布局*/
+.form-group-half {/*表单二分之一布局*/
+  width: 49.5%;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.form-group-self {/*表单自定义宽度布局*/
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.form-p {
+  font-weight: bold;
+  margin: 0 0 6px 6px;
+}
+.from-span {/*表单span*/
+  width: 100px;
+  display: inline-block;
+  text-align: center;
+}
+.half {/*表单input*/
+  width: 70%;
+  display: inline-block;
+}
+.quarter {/*表单input*/
+  display: inline-block;
+  width: 45%;
+  margin-right: 10px;
+}
+.confirm-btn {/*表单提交按钮*/
+  margin: 0 40px 20px 0;
+  text-align: right;
+}
+.alert-warning {
+  color: #e6a23c;
+  background-color: #fdf6ec;
+  padding: 3px 6px;
+  text-align: center;
+  border-radius: 4px;
+}
+/*查询section*/
+.inline {
+  display: inline-block;
+  margin-right: 20px;
+}
+.option {
+  margin: 20px 0;
+  text-align: left;
+}
+.option-span {
+  margin-left: 10px;
+}
+.result {
+  margin: 20px auto;
+}
+/*卡片布局*/
+.card {
+  width: 100%;
+  height: 170px;
+  text-align: left;
+}
+.cardhalf {
+  width: 49.5%;
+  height: 170px;
+  display: inline-block;
+}
+.cardthird {
+  width: 32.8%;
+  height: 170px;
+  display: inline-block;
+}
+.cardthirddiv {
+  margin-left: 25%;
+  margin-top: 45px;
+}
+.cardhalfdiv {
+  margin-left: 33%;
+  margin-top: 40px;
+}
+.table-span {
+  margin: 10px;
+}
+.foot-page {
+  text-align: right;
+  margin: 10px 10px 20px 20px;
+}
+/*table布局*/
+.halftable {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.halftable .lefttr {
+  text-align: right;
+  width: 50%;
+}
+.halftable .thirdtr {
+  text-align: right;
+  width: 30%;
+}
+.halftable .righttr {
+  width: 70%;
+}
+.halftable td {
+  padding: 10px 0;
+}
+.halftable tr:first-child td {
+  padding-top: 0;
+}
+.left-pie {
+  height: 500px;
+  float: left;
+}
+.right-table {
+  float: right;
+  width: 40%;
+  margin: 14% 20px auto 20px;
+  /*position: relative;*/
+  /*right: 0;*/
+}
+.detailtable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #dcdfe6;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.detailtable tr td {
+  border: 1px solid #dcdfe6;
+  padding: 8px 0;
+}
+/*清除浮动*/
+.clearfloat:after {
+  display:block;
+  clear:both;
+  content:"";
+  visibility:hidden;
+  height:0;
+}
+.clearfloat {
+  zoom: 1;
+}
+/*以下为细节样式*/
+/*红色*/
+.colorred {
+  color: red;
+}
+.colororange {
+  color: orange;
+}
+.colorblue {
+  color: #409eff;
+}
+/*宽度100%*/
+.hundred {
+  width: 100%;
+}
+.right {
+  text-align: right;
+}
+.download {
+  cursor: pointer;
+}
+.download:hover {
+  color: #409eff;
+}
