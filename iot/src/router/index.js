@@ -39,6 +39,10 @@ export default new Router({
           component: resolve => require(['../pages/number/apply.vue'], resolve)
         },
         {
+          path: 'applydetail',
+          component: resolve => require(['../pages/number/applydetail.vue'], resolve)
+        },
+        {
           path: 'handle',
           component: resolve => require(['../pages/number/handle.vue'], resolve)
         },
@@ -55,8 +59,8 @@ export default new Router({
           component: resolve => require(['../pages/traffic/usage.vue'], resolve)
         },
         {
-          path: 'detail',
-          component: resolve => require(['../pages/traffic/detail.vue'], resolve)
+          path: 'usagedetail',
+          component: resolve => require(['../pages/traffic/usagedetail.vue'], resolve)
         },
         {
           path: 'attribute',

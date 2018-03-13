@@ -109,6 +109,8 @@
             <span class="option-span">到期时间：</span>
             <el-date-picker
               v-model="deadline.time"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
               size="mini"
               type="date"></el-date-picker>
           </div>
@@ -120,7 +122,7 @@
             </el-radio-group>
           </div>
           <div class="inline">
-            <el-button class="button" type="primary" size="mini">查询</el-button>
+            <el-button class="button" type="primary" size="mini" @click="queryDeadLine">查询</el-button>
           </div>
         </div>
         <div class="result" v-loading="tableloading">
@@ -179,7 +181,7 @@
           },
           //测试/沉默期期限
           deadline: {
-            time: new Date(),  //到期时间
+            time: this.$date.formatDate(new Date(), 'yyyy-MM-dd'),  //到期时间
             status: '0'  //号码状态
           },
           tableData: [{
@@ -209,6 +211,10 @@
           }]
         }
       },
+      mounted () {
+        let s = '1000000'
+        this.card.start = parseInt(s)
+      },
       methods: {
         change (index) {  //tab切换
           if (index == 1) {
@@ -222,6 +228,9 @@
         },
         queryStatus () {  //状态查询
 
+        },
+        queryDeadLine () {
+          console.log(this.deadline)
         }
       }
     }

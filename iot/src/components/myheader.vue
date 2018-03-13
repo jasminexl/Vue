@@ -62,9 +62,14 @@
           showtab: false,
           showchange: false,
           pswForm: {
-            oldPsw: '123',
+            oldPsw: '',
             newPsw: '',
             newPswAgain: ''
+          },
+          formRules: {
+            oldrule: [
+              { required: true, message: '请输入原始密码', trigger: 'blur' }
+            ]
           },
           formLabelWidth: '80px'
         }
@@ -78,9 +83,15 @@
         },
         cancel () {
           this.showchange = false
-          this.pswForm.oldPsw = null
-          this.pswForm.newPsw = null
-          this.pswForm.newPswAgain = null
+          // this.pswForm.oldPsw = null
+          // this.pswForm.newPsw = null
+          // this.pswForm.newPswAgain = null
+          for(let name in this.pswForm) {
+            this.pswForm[name] = ""
+          }
+        },
+        checkPsw () {
+
         },
         changePsw () {
           //将pswForm发给后台

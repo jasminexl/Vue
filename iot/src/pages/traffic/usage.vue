@@ -42,7 +42,7 @@
                 <el-table-column prop="name" label="使用流量"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button type="primary" size="mini" @click="detail">详情</el-button>
+                    <el-button type="primary" size="mini" @click="detail(scope.row)">详情</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -53,7 +53,7 @@
                 <el-table-column prop="name" label="使用流量"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button type="primary" size="mini" @click="detail">详情</el-button>
+                    <el-button type="primary" size="mini" @click="detail(scope.row)">详情</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -71,6 +71,8 @@
               <el-date-picker
                 v-model="query.beginday"
                 type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 size="mini"
                 placeholder="选择开始日期">
               </el-date-picker>
@@ -78,15 +80,19 @@
               <el-date-picker
                 v-model="query.endday"
                 type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 size="mini"
                 placeholder="选择结束日期">
               </el-date-picker>
-              <el-button class="button" type="primary" size="mini" style="margin-left: 20px">按日查询</el-button>
+              <el-button class="button" type="primary" size="mini" style="margin-left: 20px" @click="queryDay">按日查询</el-button>
             </div>
             <div>
               <el-date-picker
                 v-model="query.beginmonth"
                 type="month"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 size="mini"
                 placeholder="选择开始月份">
               </el-date-picker>
@@ -94,10 +100,12 @@
               <el-date-picker
                 v-model="query.endmonth"
                 type="month"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 size="mini"
                 placeholder="选择结束月份">
               </el-date-picker>
-              <el-button class="button" type="primary" size="mini" style="margin-left: 20px">按月查询</el-button>
+              <el-button class="button" type="primary" size="mini" style="margin-left: 20px" @click="queryMonth">按月查询</el-button>
             </div>
           </div>
           <div class="result" v-loading="chartloading">
@@ -204,17 +212,24 @@
             }
           ],
           query: {
-            beginday: '',  //开始日
-            endday: '',  //结束日
-            beginmonth: '',  //开始月
-            endmonth: ''  //结束月
+            beginday: this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'),  //开始日
+            endday: this.$date.formatDate(new Date(), 'yyyy-MM-dd'),  //结束日
+            beginmonth: this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM'),  //开始月
+            endmonth: this.$date.formatDate(new Date(), 'yyyy-MM')  //结束月
           }
           // detaildata: []
         }
       },
       methods: {
-        detail () {
-          this.$router.push('/home/detail')
+        detail (row) {
+          console.log(row)
+          this.$router.push('/home/usagedetail')
+        },
+        queryDay () {
+          console.log(this.query)
+        },
+        queryMonth () {
+
         }
       }
     }

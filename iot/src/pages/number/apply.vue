@@ -16,16 +16,22 @@
             <!--<span>卡制式</span>-->
             <div class="half">
               <el-radio-group v-model="form.operator" size="mini">
-                <el-radio-button label="yd">中国移动</el-radio-button>
-                <el-radio-button label="lt">中国联通</el-radio-button>
-                <el-radio-button label="dx">中国电信</el-radio-button>
+                <el-radio-button label="1">中国移动</el-radio-button>
+                <el-radio-button label="2">中国联通</el-radio-button>
+                <el-radio-button label="3">中国电信</el-radio-button>
               </el-radio-group>
             </div>
           </div>
           <div class="form-group-half">
             <div class="from-span"><span>SIM卡类型</span></div>
             <div class="half">
-              <el-input size="mini" v-model="form.simtype"></el-input>
+              <!--<el-input size="mini" v-model="form.simtype"></el-input>-->
+              <el-select size="mini" v-model="form.simtype" class="hundred">
+                <el-option label="标准sim卡" value="1"></el-option>
+                <el-option label="mp三切卡" value="2"></el-option>
+                <el-option label="mp二切卡" value="3"></el-option>
+                <el-option label="ms贴片卡" value="4"></el-option>
+              </el-select>
             </div>
           </div>
           <div class="form-group-half">
@@ -38,22 +44,31 @@
             <!--</div>-->
             <div class="from-span"><span>测试期 <span class="colorred">*</span></span></div>
             <div class="half">
-              <el-input size="mini" v-model="form.testtime"></el-input>
+              <!--<el-input size="mini" v-model="form.testtime"></el-input>-->
+              <el-select size="mini" v-model="form.testtime" class="hundred">
+                <el-option label="0个月" value="1"></el-option>
+                <el-option label="1个月" value="2"></el-option>
+                <el-option label="2个月" value="3"></el-option>
+                <el-option label="3个月" value="4"></el-option>
+              </el-select>
             </div>
           </div>
           <div class="form-group-half">
             <div class="from-span"><span>短信</span></div>
             <div class="half">
               <el-radio-group v-model="form.message">
-                <el-radio label="open">开启</el-radio>
-                <el-radio label="close">关闭</el-radio>
+                <el-radio label="1">开启</el-radio>
+                <el-radio label="2">关闭</el-radio>
               </el-radio-group>
             </div>
           </div>
           <div class="form-group-half">
             <div class="from-span"><span>预制套餐挡位 <span class="colorred">*</span></span></div>
             <div class="half">
-              <el-input size="mini" v-model="form.prelevel"></el-input>
+              <!--<el-input size="mini" v-model="form.prelevel"></el-input>-->
+              <el-select size="mini" v-model="form.prelevel" class="hundred">
+                <el-option label="10M每月的套餐包" value="1"></el-option>
+              </el-select>
             </div>
           </div>
           <div class="form-group-half">
@@ -65,7 +80,14 @@
           <div class="form-group-half">
             <div class="from-span"><span>预制套餐时长 <span class="colorred">*</span></span></div>
             <div class="half">
-              <el-input size="mini" v-model="form.pretime"></el-input>
+              <!--<el-input size="mini" v-model="form.pretime"></el-input>-->
+              <el-select size="mini" v-model="form.pretime" class="hundred">
+                <el-option label="不限时长" value="1"></el-option>
+                <el-option label="1个月" value="2"></el-option>
+                <el-option label="3个月" value="3"></el-option>
+                <el-option label="6个月" value="4"></el-option>
+                <el-option label="12个月" value="5"></el-option>
+              </el-select>
             </div>
           </div>
           <!--<div class="form-group-half">-->
@@ -108,6 +130,8 @@
                 v-model="record.range"
                 size="mini"
                 type="daterange"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"></el-date-picker>
@@ -129,7 +153,7 @@
               <el-table-column prop="address" label="厂商"></el-table-column>
               <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
-                  <el-button size="mini">详情</el-button>
+                  <el-button size="mini" @click="detail(scope.row)">详情</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -146,6 +170,7 @@
 </template>
 
 <script>
+    // import { formatDate } from "../../utils/date/index";
     export default {
       name: "apply",
       data () {
@@ -154,21 +179,24 @@
           //号码申请
           form: {
             amount: '',  //号码数量
-            operator: 'yd',  //卡制式
-            simtype: '',  //SIM卡类型
-            networktype: '1',  //网络制式
-            testtime: '',  //测试期
-            prelevel: '',  //预制套餐挡位
-            message: 'open',  //短信
-            pretime: '',  //预制套餐时长
+            operator: '1',  //卡制式
+            simtype: '1',  //SIM卡类型
+            // networktype: '1',  //网络制式
+            testtime: '1',  //测试期
+            prelevel: '1',  //预制套餐挡位
+            message: '1',  //短信
+            pretime: '1',  //预制套餐时长
             recipient: '',  //收件人
-            slienttime: '',  //沉默期
+            // slienttime: '',  //沉默期
             telephone: '',  //收件号码
             address: ''  //收件地址
           },
+          formRules: {
+            notEmpty: [{required: true, message: '号码申请信息不可为空', trigger: 'blur'}]
+          },
           //号码申请记录
           record: {
-            range: [new Date().setMonth(new Date().getMonth() - 1), new Date()],  //查询时间段，默认为至今一个月
+            range: [this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'), this.$date.formatDate(new Date(), 'yyyy-MM-dd')],  //查询时间段，默认为至今一个月
             number: ''  //查询单号
           },
           //查询到的表格数据
@@ -200,13 +228,56 @@
         }
       },
       methods: {
+        checkForm () {
+          let amountObj = {
+            param: this.form.amount,
+            paramName: '号码数量'
+          }
+          let testtimeObj = {
+            param: this.form.testtime,
+            paramName: '测试期'
+          }
+          let prelevelObj = {
+            param: this.form.prelevel,
+            paramName: '预制套餐挡位'
+          }
+          let pretimeObj = {
+            param: this.form.pretime,
+            paramName: '预制套餐时长'
+          }
+          let recipientObj = {
+            param: this.form.recipient,
+            paramName: '收件人'
+          }
+          let telephoneObj = {
+            param: this.form.telephone,
+            paramName: '收件号码'
+          }
+          let addressObj = {
+            param: this.form.address,
+            paramName: '收件地址'
+          }
+          // if (this.$commom.checkParam(amountObj)) {
+          //   return true
+          // } else {
+          //   return false
+          // }
+          return this.$commom.checkParam(amountObj) && this.$commom.checkParam(testtimeObj) && this.$commom.checkParam(prelevelObj) && this.$commom.checkParam(pretimeObj) && this.$commom.checkParam(recipientObj) && this.$commom.checkParam(telephoneObj) && this.$commom.checkParam(addressObj)
+        },
         //确认申请按钮
         confirm () {
-          console.log(this.form)
+          if (this.checkForm()) {
+            this.$commom.log("this.form", this.form)
+          }
         },
         //号码申请查询按钮
         query () {
           console.log(this.record)
+        },
+        detail (row) {
+          console.log(row)
+          console.log(row.date)
+          this.$router.push('/home/applydetail')
         }
       }
     }

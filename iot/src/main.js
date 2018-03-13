@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import {Menu, Select, Submenu, Message, Input, Button, Form, FormItem, Option, Dialog, DatePicker, MenuItem, RadioGroup, Radio, RadioButton, Table, TableColumn, Loading, Upload, Tabs, TabPane, Pagination, Checkbox} from 'element-ui'
 import common from './utils/common'
+import date from './utils/date/index'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueParticles from 'vue-particles'
 Vue.use(Menu)
@@ -33,6 +34,7 @@ Vue.use(Checkbox)
 // Vue.component(Message.name, Message)
 Vue.use(VueParticles)
 Vue.prototype.$commom = common
+Vue.prototype.$date = date
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$message = Message
 Vue.config.productionTip = false

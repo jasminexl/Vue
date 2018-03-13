@@ -8,8 +8,10 @@ section {
   margin-bottom: 20px;
 }
 section:hover {
+  /*box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);*/
+  /*border-color: transparent;*/
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-  border-color: transparent;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 /*最后一个section*/
 .last {
@@ -22,8 +24,10 @@ main {
   margin: 15px;
 }
 main:hover {
+  /*box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);*/
+  /*border-color: transparent;*/
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-  border-color: transparent;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 /*section里面布局*/
@@ -212,4 +216,7 @@ header span {
 }
 .download:hover {
   color: #409eff;
+}
+.download:visited {
+  color: #2c3e50;
 }

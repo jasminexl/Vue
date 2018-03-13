@@ -48,12 +48,14 @@
           v-model="query.range"
           size="mini"
           type="daterange"
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"></el-date-picker>
       </div>
       <div class="inline">
-        <el-button class="button" type="primary" size="mini">查询</el-button>
+        <el-button class="button" type="primary" size="mini" @click="queryUsers">查询</el-button>
       </div>
       <!--<div class="inline" style="margin-left: 20px">-->
       <!--<el-button class="button" type="primary" size="mini">一个月</el-button>-->
@@ -123,7 +125,7 @@
             thirtysub: 1231  //30日流失用户数
           },
           query: {
-            range: [new Date().setMonth(new Date().getMonth() - 1), new Date()]  //查询时间段，默认为至今一个月
+            range: [this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'), this.$date.formatDate(new Date(), 'yyyy-MM-dd')]  //查询时间段，默认为至今一个月
           },
           tableData: [{
             date: '2016-05-02',
@@ -153,6 +155,11 @@
           pager: {
             totalpage: 10  //分页总页数
           }
+        }
+      },
+      methods: {
+        queryUsers () {
+          console.log(this.query)
         }
       }
     }

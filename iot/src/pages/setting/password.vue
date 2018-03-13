@@ -33,19 +33,27 @@
             <tr>
               <td></td>
               <td>
-                <el-button size="mini" type="primary">确认修改</el-button>
+                <el-button size="mini" type="primary" @click="changePsw">确认修改</el-button>
               </td>
             </tr>
           </table>
-          <!--<div>-->
-            <!--<el-input size="mini" v-model="pswForm.oldPsw"></el-input>-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--<el-input size="mini" v-model="pswForm.newPsw"></el-input>-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--<el-input size="mini" v-model="pswForm.newPswAgain"></el-input>-->
-          <!--</div>-->
+          <el-form :model="pswForm" :rules="pswRule" ref="formRef">
+            <el-form-item label="原始密码" label-width="30%" size="mini" prop="oldPsw">
+              <div style="width: 70%">
+                <el-input size="mini" v-model="pswForm.oldPsw" placeholder="请输入原始密码" auto-complete="off"></el-input>
+              </div>
+            </el-form-item>
+            <el-form-item label="原始密码" label-width="30%" size="mini">
+              <div style="width: 70%">
+                <el-input size="mini" auto-complete="off"></el-input>
+              </div>
+            </el-form-item>
+            <el-form-item label="原始密码" label-width="30%" size="mini">
+              <div style="width: 70%">
+                <el-input size="mini" auto-complete="off"></el-input>
+              </div>
+            </el-form-item>
+          </el-form>
         </div>
       </section>
     </div>
@@ -55,13 +63,23 @@
     export default {
       name: "password",
       data () {
-          return {
-            pswForm: {
-              oldPsw: '',
-              newPsw: '',
-              newPswAgain: ''
-            }
+        return {
+          pswForm: {
+            oldPsw: '',
+            newPsw: '',
+            newPswAgain: ''
+          },
+          pswRule: {
+            oldPsw: [
+              { required: true, message: '请输入活动名称', trigger: 'blur' }
+            ]
           }
+        }
+      },
+      methods: {
+        changePsw () {
+
+        }
       }
     }
 </script>

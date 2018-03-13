@@ -34,12 +34,12 @@
               </el-upload>
             </div>
             <div style="margin-bottom: 10px">
-              <a class="download"><i class="el-icon-download"></i> 下载示例文档</a>
+              <a class="download" :href="downloadUrl"><i class="el-icon-download"></i> 下载示例文档</a>
             </div>
             <div>
-              <el-button size="mini" disabled type="primary">开机</el-button>
-              <el-button size="mini" disabled type="primary">停机</el-button>
-              <el-button size="mini" disabled type="primary">销户</el-button>
+              <el-button size="mini" :disabled="disfile" type="primary" @click="start">开机</el-button>
+              <el-button size="mini" :disabled="disfile" type="primary">停机</el-button>
+              <el-button size="mini" :disabled="disfile" type="primary">销户</el-button>
             </div>
           </div>
         </div>
@@ -121,6 +121,8 @@
                 v-model="query.range"
                 size="mini"
                 type="daterange"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"></el-date-picker>
@@ -134,7 +136,7 @@
               </el-select>
             </div>
             <div class="inline">
-              <el-button class="button" type="primary" size="mini">查询</el-button>
+              <el-button class="button" type="primary" size="mini" @click="queryNum">查询</el-button>
             </div>
           </div>
           <div class="result" v-loading="loading">
@@ -166,11 +168,13 @@
         return {
           loading: false,  //号码操作记录表格查询中，默认隐藏loading
           //号码操作
-          isnumber: false,  //判断号码是否符合要求，默认为不符合，按钮禁用
+          disnumber: true,  //判断号码是否符合要求，默认为不符合，按钮禁用
+          disfile: true,  //判断txt文档是否符合要求，默认为不符合，按钮禁用
           number: '',  //号码
           fileList: [  //已选择上传文件
             {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
           ],
+          downloadUrl: '',
           //号码自定义标签
           tabname: 'first',  //转换面板name
           //针对订单
@@ -181,7 +185,7 @@
           iccidnum: '',  //iccid号段
           //号码操作记录
           query: {
-            range: [new Date().setMonth(new Date().getMonth() - 1), new Date()],  //查询时间段，默认为至今一个月
+            range: [this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'), this.$date.formatDate(new Date(), 'yyyy-MM-dd')],  //查询时间段，默认为至今一个月
             type: ''
           },
           tableData: [{
@@ -210,7 +214,8 @@
       },
       methods: {
         start () {  //开机
-
+          this.$message.info('开机')
+          // alert('ww12')
         },
         stop () {  //停机
 
@@ -219,7 +224,7 @@
 
         },
         queryNum () {  //查询号码操作记录
-
+          this.$commom.log('this.query', this.query)
         }
       }
     }

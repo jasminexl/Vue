@@ -175,7 +175,7 @@
             this.loading = false  //取消loading
             this.isdisableL = false  //取消禁用
             this.$router.push('/home')
-            this.$commom.clearParam(this.loginForm)
+            // this.$commom.clearParam(this.loginForm)
           } else {
             // setTimeout(() => {
             //   this.isdisableL = false

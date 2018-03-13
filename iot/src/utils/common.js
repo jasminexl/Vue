@@ -3,9 +3,9 @@ import { Message } from 'element-ui'
 // Vue.use(Message)
 Vue.prototype.$message = Message
 export default {
-  log (param) {
-    console.log(param[0])
-    console.log(param[1])
+  log (a, b) {
+    console.log(a)
+    console.log(b)
   },
   clearParam (param) {
     if (typeof param === "object") {
@@ -20,8 +20,21 @@ export default {
       param = ''
     }
   },
+  /**
+   * 检查参数obj:{
+   * emptyLimit(判断是否为空,默认进行不可为空判断,false表示不进行为空判断),
+   * param(参数),
+   * paramName(参数名称),
+   * type(检查类型-max/min/regexp),
+   * content(检查标准),
+   * msg(返回的提示信息)
+   * }
+   * @param obj
+   * @returns {boolean}
+   */
   checkParam (obj) {
     if (obj.emptyLimit === 'false') {
+      //可以为空
       console.log('isempty-false')
       if (obj.type === 'max') {
         console.log('type-max')
@@ -59,6 +72,7 @@ export default {
         }
       }
     } else {
+      //不可以为空
       console.log('isempty-true')
       if (obj.param) {
         console.log('param-true')
