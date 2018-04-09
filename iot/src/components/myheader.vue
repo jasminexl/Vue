@@ -14,8 +14,8 @@
         </el-select>
       </div>
       <div class="header-user" @mouseenter="showUser" @mouseleave="closeUser">
-        <img src="../assets/image/user.png" width="22"/>
-        <span class="username">{{username}}</span>
+        <!--<img src="../assets/image/user.png" width="22"/>-->
+        <span class="username">您好, {{username}}</span>
         <span style="margin-left: 20px;cursor: pointer" @click="logout">注销</span>
         <!--<div class="user-tab" v-show="showtab">-->
           <!--<div>-->
@@ -58,7 +58,7 @@
       data () {
         return {
           selected: '演示账号',
-          username: '姜伟',
+          username: '',
           showtab: false,
           showchange: false,
           pswForm: {
@@ -74,7 +74,21 @@
           formLabelWidth: '80px'
         }
       },
+      created () {
+        this.getAccount()
+        // this.username = localStorage.getItem("username")
+      },
       methods: {
+        getAccount () {
+          this.$ajax.get("/caihiot/api-user/user/getCustAccount")
+            .then((res) => {
+              console.log(res.data)
+              this.username = res.data.custAccount
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        },
         showUser () {
           this.showtab = true
         },
@@ -102,7 +116,8 @@
           console.log(this.pswForm.oldPsw)
         },
         logout () {
-          this.$router.push('/login')
+          localStorage.removeItem("token")
+          this.$router.push('/')
         }
       }
     }
@@ -111,8 +126,12 @@
 <style scoped>
   .myheader {
     height: 60px;
-    background-color: #000;
+    background: linear-gradient(#434343, #000);
+    background: -o-linear-gradient(#434343, #000);
+    background: -webkit-linear-gradient(#434343, #000);
+    background: -moz-linear-gradient(#434343, #000);
     color: #fff;
+    box-shadow: 0 1px 2px #000;
   }
   .header-content {
     width: 100%;

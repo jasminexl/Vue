@@ -33,24 +33,30 @@
           <div class="login-group">
             <!--<input type="text" placeholder="用户名" v-model.trim="username" @blur="checkUser"/>-->
             <div class="login-input">
-              <el-input size="small" placeholder="手机号/电子邮箱" v-model.trim="loginForm.username" autofocus></el-input>
+              <el-input size="small" placeholder="手机号或电子邮箱" v-model.trim="loginForm.username" autofocus></el-input>
             </div>
           </div>
           <div class="login-group">
             <!--<input type="password" placeholder="密码" v-model.trim="password" @blur="checkPsw"/>-->
             <div class="login-input">
-              <el-input size="small" type="password" placeholder="密码" v-model.trim="loginForm.password" @keyup.enter.native="login"></el-input>
+              <el-input size="small" type="password" placeholder="密码" v-model.trim="loginForm.password"></el-input>
             </div>
           </div>
+          <div class="login-group" style="display: flex;align-items: center">
+            <div class="login-input" style="width: 197px;margin-right: 10px">
+              <el-input size="small" placeholder="验证码" :maxlength="max" v-model.trim="loginForm.code" @keyup.enter.native="login"></el-input>
+            </div>
+            <img class="pointer" @click="getCode" :src="imgsrc" width="100" height="40"/>
+          </div>
           <div class="login-group">
-            <span class="left">没有账号？<a @click="issignin = true">注册</a></span>
-            <router-link to="/forgetpsw" class="right">忘记密码？</router-link>
+            <span class="left">没有账号？<a @click="tabSignin">注册</a></span>
+            <router-link to="/account/forgetpsw" target="_blank" class="right">忘记密码？</router-link>
           </div>
           <div class="login-group">
             <!--<button type="button" @click="login">-->
               <!--<span>登录</span>-->
             <!--</button>-->
-            <el-button size="mini" @click="login" :disabled="isdisableL">
+            <el-button class="submit-btn" size="mini" @click="login" :disabled="isdisableL">
               <span v-show="!loading">登录<span v-show="iscountL"> {{countL}}s</span></span>
               <i class="el-icon-loading" v-show="loading"></i>
             </el-button>
@@ -65,7 +71,7 @@
           <div class="login-group">
             <!--<input type="text" placeholder="用户名" v-model.trim="username" @blur="checkUser"/>-->
             <div class="login-input">
-              <el-input size="small" placeholder="手机号/电子邮箱" v-model.trim="signinForm.username" @blur="checkUser"></el-input>
+              <el-input size="small" placeholder="手机号或电子邮箱" v-model.trim="signinForm.username"></el-input>
             </div>
           </div>
           <div class="login-group">
@@ -77,18 +83,24 @@
           <div class="login-group">
             <!--<input type="password" placeholder="密码" v-model.trim="password" @blur="checkPsw"/>-->
             <div class="login-input">
-              <el-input size="small" type="password" placeholder="再次输入密码" v-model.trim="signinForm.passwordAgain" @keyup.enter.native="keyEnterSignin"></el-input>
+              <el-input size="small" type="password" placeholder="再次输入密码" v-model.trim="signinForm.passwordAgain"></el-input>
             </div>
           </div>
+          <div class="login-group" style="display: flex;align-items: center">
+            <div class="login-input" style="width: 197px;margin-right: 10px">
+              <el-input size="small" placeholder="验证码" :maxlength="max" v-model.trim="signinForm.code" @keyup.enter.native="register"></el-input>
+            </div>
+            <img class="pointer" @click="getCode" :src="imgsrc" width="100" height="40"/>
+          </div>
           <div class="login-group">
-            <span class="left">已有账号？<a @click="issignin = false">登录</a></span>
+            <span class="left">已有账号？<a @click="tabLogin">登录</a></span>
             <!--<a href="#" class="right">忘记密码？</a>-->
           </div>
           <div class="login-group">
             <!--<button type="button" @click="login">-->
               <!--<span>登录</span>-->
             <!--</button>-->
-            <el-button size="mini" @click="register" :disabled="isdisableS">
+            <el-button class="submit-btn" size="mini" @click="register" :disabled="isdisableS">
               <span v-show="!loading">注册<span v-show="isdisableS"> {{countS}}s</span></span>
               <i class="el-icon-loading" v-show="loading"></i>
             </el-button>
@@ -100,18 +112,24 @@
 </template>
 
 <script>
+  import md5 from 'js-md5'
     export default {
       name: "login",
       data () {
         return {
+          max: 4,
+          date: '',
+          imgsrc: '',
           loginForm: {  //登录表单
             username: '',
             password: '',
+            code: ''
           },
           signinForm: {  //注册表单
             username: '',
             password: '',
-            passwordAgain: ''
+            passwordAgain: '',
+            code: ''
           },
           loading: false,  //默认loading.gif不显示
           issignin: false,  //登录、注册切换，默认false为登录界面
@@ -123,36 +141,28 @@
           countS: 5  //注册倒计时
         }
       },
+      created () {
+        this.$commom.clearParam(this.loginForm)
+      },
+      mounted () {
+        this.getCode()
+      },
       methods: {
-        checkUser () {
-          // let telReg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/
-          // let emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-          // if (!this.username) {
-          //   this.$message.error('您的手机号/电子邮箱不能为空')
-          // } else {
-          //   if (telReg.test(this.username) || emailReg.test(this.username)) {
-          //     return true
-          //   } else {
-          //     this.$message.error('您的手机号/电子邮箱不符合规格')
-          //   }
-          // }
-          //ajax请求手机号/电子邮箱是否注册过
-          this.$message.warning('您的手机号/电子邮箱已注册')
+        tabSignin () {
+          this.$commom.clearParam(this.signinForm)
+          this.issignin = true  //显示注册页面
+          this.loading = false  //关闭loading
+          this.isdisableS = false
+          this.getCode()
         },
-        checkPsw () {
-          let pswReg = /^[a-zA-Z0-9]{6,16}$/
-          if (!this.password) {
-            this.$message.error('您的密码不能为空')
-          } else {
-            if (!pswReg.test(this.password)) {
-              this.$message.error('您的密码只能是6~16位字母和数字')
-            } else {
-              return true
-            }
-          }
+        tabLogin () {
+          this.$commom.clearParam(this.loginForm)
+          this.issignin = false  //显示登录页面
+          this.loading = false  //关闭loading
+          this.isdisableL = false
+          this.getCode()
         },
         login () {
-          // this.isdisableL = true  //禁用按钮
           let userObj = {
             param: this.loginForm.username,
             type: 'regexp',
@@ -169,36 +179,75 @@
           }
           if (this.$commom.checkParam(userObj) && this.$commom.checkParam(pswObj)) {
             console.log('准备请求')
+            this.isdisableL = true
             this.countL = null
             this.loading = true  //开始loading
             //ajax请求
-            this.loading = false  //取消loading
-            this.isdisableL = false  //取消禁用
-            this.$router.push('/home')
-            // this.$commom.clearParam(this.loginForm)
+            this.$ajax({
+              method: 'get',
+              url: '/vailcode/vail/vailVerify',
+              params: {
+                date: this.date,
+                verify: this.loginForm.code.toLowerCase()
+              }
+            })
+              .then((res) => {
+                console.log(res)
+                if (res.data.code == '0') {
+                  this.$ajax({
+                    method: 'post',
+                    url: '/caihiot/api-user/user/login',
+                    data: {
+                      custAccount: this.loginForm.username,
+                      custPasswd: md5(this.loginForm.password)
+                    }
+                  })
+                    .then((res) => {
+                      console.log(res)
+                      if (res.data.code == '0') {
+                        this.loading = false  //取消loading
+                        this.isdisableL = false  //取消禁用
+                        this.$message.success("登录成功")
+                        localStorage.setItem("token", res.data.token)
+                        localStorage.setItem("status", res.data.authStatus)
+                        this.$router.push('/home')
+                      } else {
+                        this.$message.error(res.data.msg)
+                        this.getCode()
+                        this.$commom.clearParam(this.loginForm)
+                        this.loading = false  //取消loading
+                        this.isdisableL = false  //取消禁用
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err)
+                      this.$commom.clearParam(this.loginForm)
+                    })
+                } else {
+                  this.$message.error(res.data.msg)
+                  this.getCode()
+                  this.loginForm.code = ''
+                  this.loading = false  //取消loading
+                  this.isdisableL = false  //取消禁用
+                }
+              })
+              .catch((err) => {
+                console.log(err)
+                this.loginForm.code = ''
+              })
           } else {
-            // setTimeout(() => {
-            //   this.isdisableL = false
-            // }, 5000)
-            // this.countL = 5
-            // this.iscountL = true
-            // let timerLogin = setInterval(() => {
-            //   if (this.countL > 0) {
-            //     this.countL--
-            //   } else {
-            //     this.isdisableL = false
-            //     this.iscountL = false
-            //     clearInterval(timerLogin)
-            //   }
-            // }, 1000)
             this.keyEnterLogin()
+            this.$commom.clearParam(this.loginForm)
+            this.getCode()
           }
         },
         register () {
+          let mobileReg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/
+          let emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
           let userObj = {
             param: this.signinForm.username,
             type: 'regexp',
-            content: [/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/, /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/],
+            content: [/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/, /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/],
             msg: '您的手机号/电子邮箱不符合规格',
             paramName: '您的手机号/电子邮箱'
           }
@@ -211,17 +260,82 @@
           }
           if (this.$commom.checkParam(userObj) && this.$commom.checkParam(pswObj)) {
             if (this.signinForm.password === this.signinForm.passwordAgain) {
+              this.isdisableS = true
+              this.countS = null
               this.loading = true
               //ajax请求
-              this.loginForm.username = this.signinForm.username
-              this.loginForm.password = this.signinForm.password
-              this.loading = false
-              this.issignin = false
-              this.$commom.clearParam(this.signinForm)
-              // this.$router.push('/home')
+              this.$ajax({
+                method: 'get',
+                url: '/vailcode/vail/vailVerify',
+                params: {
+                  date: this.date,
+                  verify: this.signinForm.code.toLowerCase()
+                }
+              })
+                .then((res) => {
+                  console.log(res)
+                  if (res.data.code == '0') {
+                    let sendForm = {
+                      custAccount: this.signinForm.username,
+                      custPasswd: md5(this.signinForm.password),
+                      custIdComfirm: '1'
+                    }
+                    if (mobileReg.test(this.signinForm.username)) {
+                      sendForm.custMobile = this.signinForm.username
+                    } else if (emailReg.test(this.signinForm.username)) {
+                      sendForm.custMail = this.signinForm.username
+                    }
+                    console.log('sendForm', sendForm)
+                    //发送用户注册请求
+                    this.$ajax({
+                      method: 'post',
+                      url: '/signin/caihiot/tcust/register',
+                      data: sendForm
+                    })
+                      .then((res) => {
+                        console.log(res)
+                        if (res.data.code == '0') {
+                          this.$message.error('注册成功')
+                          this.getCode()
+                          this.loginForm.username = this.signinForm.username
+                          this.loginForm.password = this.signinForm.password
+                          this.loading = false
+                          this.issignin = false
+                          this.isdisableS = false
+                        } else {
+                          this.$message.error(res.data.msg)
+                          this.$commom.clearParam(this.signinForm)
+                          this.issignin = true
+                          this.loading = false
+                          this.isdisableS = false
+                        }
+                      })
+                      .catch((err) => {
+                        console.log(err)
+                        this.$commom.clearParam(this.signinForm)
+                      })
+                  } else {
+                    this.$message.error(res.data.msg)
+                    this.getCode()
+                    this.signinForm.code = ''
+                    this.issignin = true
+                    this.loading = false
+                    this.isdisableS = false
+                  }
+                })
+                .catch((err) => {
+                  console.log(err)
+                  this.signinForm.code = ''
+                })
             } else {
               this.$message.error('两次输入密码不一致')
+              this.$commom.clearParam(this.signinForm)
+              this.getCode()
             }
+          } else {
+            this.keyEnterSignin()
+            this.$commom.clearParam(this.signinForm)
+            this.getCode()
           }
         },
         keyEnterLogin () {
@@ -244,15 +358,17 @@
         },
         keyEnterSignin () {
           if (this.flag(this.isdisableS) === true) {
-            console.log("keyenter")
-            this.register()
+            console.log("keyenterSogn")
+            // this.register()
             this.countS = 5
+            this.iscountS = true
             this.isdisableS = true
             let timerSignin = setInterval(() => {
               if (this.countS > 0) {
                 this.countS--
               } else {
                 this.isdisableS = false
+                this.iscountS = false
                 clearInterval(timerSignin)
               }
             }, 1000)
@@ -267,6 +383,33 @@
           } else {
             return true
           }
+        },
+        // 获取验证码
+        getCode () {
+          this.date = new Date().getTime()
+          this.$ajax({
+            method: 'get',
+            url: '/vailcode/vail/getVerifyImage',
+            responseType: 'arraybuffer',
+            withCredentials: true,
+            params: {
+              date: this.date
+            }
+          })
+            .then((res) => {
+              console.log(res)
+              return 'data:image/jpeg;base64,' + btoa(
+                new Uint8Array(res.data)
+                  .reduce((data, byte) => data + String.fromCharCode(byte), '')
+              )
+            })
+            .then(data => {
+              console.log(data)
+              this.imgsrc = data
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         }
       }
     }

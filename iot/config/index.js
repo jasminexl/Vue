@@ -10,11 +10,105 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      //路由网关
+      '/caihiot': {
+        target: 'http://127.0.0.1:9391',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/caihiot': '/'
+        }
+      },
+      '/user': {
+        target: 'http://127.0.0.1:9291',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/user': '/'
+        }
+      },
+      //验证码（图片）
+      '/vailcode': {
+        target: 'http://127.0.0.1:9092',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/vailcode': '/'
+        }
+      },
+      '/signin': {
+        target: 'http://127.0.0.1:9094',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/signin': '/'
+        }
+      },
+      '/login': {
+        target: 'http://127.0.0.1:9091',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/login': '/'
+        }
+      },
+      '/forgetpsw': {
+        target: 'http://127.0.0.1:9093',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/forgetpsw': '/'
+        }
+      },
+      '/mainchart': {
+        target: 'http://127.0.0.1:9099',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mainchart': '/'
+        }
+      },
+      '/register': {
+        target: 'http://127.0.0.1:9096',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/register': '/'
+        }
+      },
+      '/info': {
+        target: 'http://127.0.0.1:9118',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/info': '/'
+        }
+      },
+      '/numberapply': {
+        target: 'http://172.16.0.28:9100',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/numberapply': '/'
+        }
+      },
+      '/applyquery': {
+        target: 'http://172.16.0.28:9101',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/applyquery': '/'
+        }
+      },
+      '/usercard': {
+        target: 'http://172.16.0.4:9112',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/usercard': '/'
+        }
+      },
+      '/operatequery': {
+        target: 'http://172.16.0.28:9104',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/operatequery': '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 7080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

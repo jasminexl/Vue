@@ -202,13 +202,15 @@
           flowmax: [  //流量最多表格
             {
               date: '2016-05-02',
-              name: '50MB'
+              name: '50MB',
+              id: '1'
             }
           ],
           flowmin: [  //流量最少表格
             {
               date: '2018-05-02',
-              name: '4.5KB'
+              name: '4.5KB',
+              id: '2'
             }
           ],
           query: {
@@ -216,14 +218,14 @@
             endday: this.$date.formatDate(new Date(), 'yyyy-MM-dd'),  //结束日
             beginmonth: this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM'),  //开始月
             endmonth: this.$date.formatDate(new Date(), 'yyyy-MM')  //结束月
-          }
-          // detaildata: []
+          },
+          detaildata: []
         }
       },
       methods: {
         detail (row) {
-          console.log(row)
-          this.$router.push('/home/usagedetail')
+          console.log(row.id)
+          this.$router.push({name: 'usagedetail', params: {id: row.id}})
         },
         queryDay () {
           console.log(this.query)

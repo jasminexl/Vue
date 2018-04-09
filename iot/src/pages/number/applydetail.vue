@@ -63,6 +63,7 @@
       name: "applydetail",
       data () {
         return {
+          detailId: '',
           applydetail: {
             amount: '',  //号码数量
             operator: '1',  //卡制式
@@ -95,6 +96,10 @@
             }
           ]
         }
+      },
+      created () {
+        this.detailId = this.$route.params.id
+        console.log(this.detailId)
       },
       methods: {
         goback () {

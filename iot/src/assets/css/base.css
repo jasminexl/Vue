@@ -10,7 +10,7 @@ section {
 section:hover {
   /*box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);*/
   /*border-color: transparent;*/
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 0, 0, 0.1);
 }
 /*最后一个section*/
@@ -26,7 +26,7 @@ main {
 main:hover {
   /*box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);*/
   /*border-color: transparent;*/
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -160,14 +160,19 @@ header span {
 .halftable tr:first-child td {
   padding-top: 0;
 }
+.flex {
+  display: -webkit-flex;
+}
 .left-pie {
-  height: 500px;
-  float: left;
+  display: inline-block;
+  height: 450px;
+  /*float: left;*/
 }
 .right-table {
-  float: right;
-  width: 40%;
-  margin: 14% 20px auto 20px;
+  display: inline-block;
+  /*float: right;*/
+  width: 250px;
+  margin: 14% 10px auto 10px;
   /*position: relative;*/
   /*right: 0;*/
 }
@@ -193,6 +198,30 @@ header span {
 .clearfloat {
   zoom: 1;
 }
+/*图片放大*/
+.img-view {
+  width: 100%;
+  height: 100%;
+}
+.img-view .img-layer {
+  background: #000;
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+.img-view .img {
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  top: 14%;
+  margin: auto;
+  cursor: zoom-out;
+}
 /*以下为细节样式*/
 /*红色*/
 .colorred {
@@ -211,6 +240,10 @@ header span {
 .right {
   text-align: right;
 }
+.inline-center {
+  display: inline-block;
+  text-align: center;
+}
 .download {
   cursor: pointer;
 }
@@ -219,4 +252,10 @@ header span {
 }
 .download:visited {
   color: #2c3e50;
+}
+.zoom-in {
+  cursor: zoom-in;
+}
+.zoom-out {
+  cursor: zoom-out;
 }

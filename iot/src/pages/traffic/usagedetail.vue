@@ -1,35 +1,5 @@
 <template>
     <div class="wrapper">
-      <!--<section v-loading="cardloading">-->
-        <!--<div class="card" style="border-bottom: 1px solid #e9e9e9;">-->
-          <!--<div class="cardhalf" style="border-right: 1px solid #e9e9e9;">-->
-            <!--<div class="cardhalfdiv">-->
-              <!--<span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;昨日消耗流量</span>-->
-              <!--<p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.lastuse' :duration='2000'></count-to> Byte</p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="cardhalf">-->
-            <!--<div class="cardhalfdiv">-->
-              <!--<span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;本月已用总流量</span>-->
-              <!--<p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.totaluse' :duration='2000'></count-to> Byte</p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="card">-->
-          <!--<div class="cardhalf" style="border-right: 1px solid #e9e9e9;">-->
-            <!--<div class="cardhalfdiv">-->
-              <!--<span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;昨日卡均流量</span>-->
-              <!--<p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.lastaver' :duration='2000'></count-to> Byte</p>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="cardhalf">-->
-            <!--<div class="cardhalfdiv">-->
-              <!--<span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;近7日卡均流量</span>-->
-              <!--<p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.sevenaver' :duration='2000'></count-to> Byte</p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</section>-->
       <section>
         <header>
           <span>号码详情</span>
@@ -117,65 +87,6 @@
           <div class="result" v-loading="chartloading">
             <div class="table-span"><span>流量使用情况-按日统计</span></div>
           </div>
-          <!--<div class="result" v-loading="tableloading">-->
-            <!--<div class="table-span"><span>详细数据-按日统计</span></div>-->
-            <!--<el-table-->
-              <!--:data="detaildata"-->
-              <!--style="width: 100%">-->
-              <!--<el-table-column-->
-                <!--prop="date"-->
-                <!--label="日期">-->
-              <!--</el-table-column>-->
-              <!--<el-table-column label="消耗值（日）">-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="流量值">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="同比">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="环比">-->
-                <!--</el-table-column>-->
-              <!--</el-table-column>-->
-              <!--<el-table-column label="每日卡均流量">-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="流量值">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="同比">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="环比">-->
-                <!--</el-table-column>-->
-              <!--</el-table-column>-->
-              <!--<el-table-column label="每7日卡均流量">-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="流量值">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="同比">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--prop="name"-->
-                  <!--label="环比">-->
-                <!--</el-table-column>-->
-              <!--</el-table-column>-->
-            <!--</el-table>-->
-            <!--<div class="foot-page">-->
-              <!--<el-pagination-->
-                <!--layout="total, prev, pager, next, jumper"-->
-                <!--:total="1000">-->
-              <!--</el-pagination>-->
-            <!--</div>-->
-          <!--</div>-->
         </div>
       </section>
       <section class="last">
@@ -205,8 +116,10 @@
 <script>
     export default {
       name: "detail",
+      props: ['childid'],
       data () {
         return {
+          detailid: '',
           numdetail: {  //号码详情数据
             number: '13123456789',
             imsi: '21324354546212',
@@ -250,6 +163,10 @@
             endmonth: this.$date.formatDate(new Date(), 'yyyy-MM')  //结束月
           }
         }
+      },
+      created () {
+        this.detailid = this.$route.params.id
+        console.log(this.detailid)
       },
       methods: {
         goback () {

@@ -22,7 +22,12 @@
       mounted () {
         console.log(document.getElementById('navside').clientHeight + 'px')
         document.getElementById('pages').style.minHeight = document.getElementById('navside').clientHeight - 20 + 'px'
-      },
+      }
+      // beforeRouteEnter (to, from, next) {
+      //   next(vm => {
+      //     this.$message.info('请先进行企业信息认证！')
+      //   })
+      // }
     }
 </script>
 

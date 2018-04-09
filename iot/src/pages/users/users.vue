@@ -24,19 +24,19 @@
       <div class="card">
         <div class="cardthird" style="border-right: 1px solid #e9e9e9;">
           <div class="cardthirddiv">
-            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;昨日流失用户数</span>
+            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;昨日停机用户数</span>
             <p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.lastsub' :duration='2000'></count-to></p>
           </div>
         </div>
         <div class="cardthird" style="border-right: 1px solid #e9e9e9;">
           <div class="cardthirddiv">
-            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;7日流失用户数</span>
+            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;7日停机用户数</span>
             <p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.sevensub' :duration='2000'></count-to></p>
           </div>
         </div>
         <div class="cardthird">
           <div class="cardthirddiv">
-            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;30日流失用户数</span>
+            <span style="font-size: 15px"><i class="el-icon-caret-right" style="color: red"></i>&nbsp;&nbsp;30日停机用户数</span>
             <p style="font-size: 26px;margin: 15px 23px"><count-to :startVal='startnum' :endVal='card.thirtysub' :duration='2000'></count-to></p>
           </div>
         </div>
@@ -86,7 +86,7 @@
           <el-table-column prop="date" label="日期"></el-table-column>
           <el-table-column prop="name" label="日新增用户数"></el-table-column>
           <el-table-column prop="address" label="累计总用户数"></el-table-column>
-          <el-table-column prop="address" label="日流失用户数"></el-table-column>
+          <el-table-column prop="address" label="日停机用户数"></el-table-column>
           <el-table-column prop="address" label="累计流水用户数"></el-table-column>
           <el-table-column prop="address" label="在网率"></el-table-column>
           <!--<el-table-column prop="address" label="当前在网用户数"></el-table-column>-->
@@ -117,47 +117,46 @@
           tableloading: false,  //表格查询中，默认隐藏loading
           startnum: 0,  //计数开始数
           card: {
-            lastadd: 2000,  //昨日新增用户数
-            sevenadd: 3123,  //7日新增用户数
-            thirtyadd: 2131,  //30日新增用户数
-            lastsub: 21312,  //昨日流失用户数
-            sevensub: 21133,  //7日流失用户数
-            thirtysub: 1231  //30日流失用户数
+            lastadd: 0,  //昨日新增用户数
+            sevenadd: 0,  //7日新增用户数
+            thirtyadd: 0,  //30日新增用户数
+            lastsub: 0,  //昨日停机用户数
+            sevensub: 0,  //7日停机用户数
+            thirtysub: 0  //30日停机用户数
           },
           query: {
             range: [this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'), this.$date.formatDate(new Date(), 'yyyy-MM-dd')]  //查询时间段，默认为至今一个月
           },
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '1516 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '1516 弄'
-          }],
+          tableData: [],
           pager: {
             totalpage: 10  //分页总页数
           }
         }
       },
+      created () {
+        this.loadCard()
+      },
       methods: {
+        //初始化卡片数据
+        loadCard () {
+          this.cardloading = true
+          this.$ajax.get('/usercard/caihiot/tcardoperator/newAndLose/' + '4fs56af48s9a4f8af97sdf46564')
+            .then((res) => {
+              console.log(res.data.newAndLoseArray)
+              let arr = res.data.newAndLoseArray
+              this.card.lastadd = arr[0]
+              this.card.sevenadd = arr[1]
+              this.card.thirtyadd = arr[2]
+              this.card.lastsub = arr[3]
+              this.card.sevensub = arr[4]
+              this.card.thirtysub = arr[5]
+              this.cardloading = false
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        },
+        //查询用户量
         queryUsers () {
           console.log(this.query)
         }

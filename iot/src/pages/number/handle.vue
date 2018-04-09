@@ -128,11 +128,13 @@
                 end-placeholder="结束日期"></el-date-picker>
             </div>
             <div class="inline">
-              <el-select size="mini" v-model="query.type" class="hundred">
-                <el-option value="" label="全部"></el-option>
-                <el-option value="1" label="停机/开机"></el-option>
-                <el-option value="2" label="销户"></el-option>
-                <el-option value="3" label="设置自定义属性"></el-option>
+              <el-select size="mini" v-model="query.type" class="hundred" placeholder="请选择号码状态">
+                <el-option value="0" label="全部"></el-option>
+                <el-option value="1" label="停/开机"></el-option>
+                <el-option value="2" label="开/关流量"></el-option>
+                <el-option value="3" label="来电显示"></el-option>
+                <el-option value="4" label="销户"></el-option>
+                <el-option value="9" label="开/关短信"></el-option>
               </el-select>
             </div>
             <div class="inline">
@@ -141,18 +143,21 @@
           </div>
           <div class="result" v-loading="loading">
             <el-table :data="tableData" border size="small" :default-sort = "{prop: 'date', order: 'descending'}">
-              <el-table-column prop="name" label="具体操作"></el-table-column>
-              <el-table-column prop="date" label="操作时间" sortable></el-table-column>
+              <el-table-column prop="type" label="具体操作"></el-table-column>
+              <el-table-column prop="updateDate" label="操作时间" sortable></el-table-column>
               <!--<el-table-column prop="address" label="操作成功时间"></el-table-column>-->
-              <el-table-column prop="address" label="号码数"></el-table-column>
-              <el-table-column prop="address" label="号码详情"></el-table-column>
-              <el-table-column prop="address" label="结果"></el-table-column>
-              <el-table-column prop="address" label="操作人"></el-table-column>
+              <!--<el-table-column prop="address" label="号码数"></el-table-column>-->
+              <!--<el-table-column prop="address" label="号码详情"></el-table-column>-->
+              <el-table-column prop="status" label="结果"></el-table-column>
+              <el-table-column prop="operatorName" label="操作人"></el-table-column>
             </el-table>
             <div class="foot-page">
               <el-pagination
+                @current-change="handleCurrentChange"
+                :current-page="pagination.curpage"
+                :page-size="pagination.pagesize"
                 layout="total, prev, pager, next, jumper"
-                :total="1000">
+                :total="pagination.totalsize">
               </el-pagination>
             </div>
           </div>
@@ -186,31 +191,18 @@
           //号码操作记录
           query: {
             range: [this.$date.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'), this.$date.formatDate(new Date(), 'yyyy-MM-dd')],  //查询时间段，默认为至今一个月
-            type: ''
+            type: '0'
           },
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
+          tableData: [],
+          pagination: {
+            curpage: 1,
+            pagesize: 10,
+            totalsize: 100
           }
-          ]
         }
+      },
+      created () {
+        this.queryNum()
       },
       methods: {
         start () {  //开机
@@ -225,6 +217,36 @@
         },
         queryNum () {  //查询号码操作记录
           this.$commom.log('this.query', this.query)
+          let sendData = {
+            fistDate: this.query.range[0],
+            endDate: this.query.range[1],
+            type: this.query.type,
+            page: this.pagination.curpage,
+            limit: this.pagination.pagesize
+          }
+          this.loading = true
+          this.$ajax.get('/operatequery/caihiot/queryoperaterecord', {
+            params: sendData
+          })
+            .then((res) => {
+              console.log(res.data)
+              this.tableData = res.data.list.list
+              this.pagination.totalsize = res.data.list.totalCount
+              this.pagination.pagesize = res.data.list.pageSize
+              this.pagination.curpage = res.data.list.currPage
+              this.loading = false
+            })
+            .catch((err) => {
+              console.log(err)
+              this.loading = false
+            })
+        },
+        //分页按钮
+        handleCurrentChange (val) {
+          console.log('val')
+          console.log(val)
+          this.pagination.curpage = val
+          this.queryNum()
         }
       }
     }

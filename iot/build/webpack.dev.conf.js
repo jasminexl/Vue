@@ -25,7 +25,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+        {
+          from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
+          // from: /^\/forgetpsw?/, to: '/forgetpsw'
+        },
       ],
     },
     hot: true,
@@ -55,7 +58,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      favicon: './static/weblogo.ico'
     }),
     // copy custom static assets
     new CopyWebpackPlugin([

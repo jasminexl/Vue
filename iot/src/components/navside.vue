@@ -36,6 +36,13 @@
       computed: {
         dactive () {
           return this.$route.path
+        },
+        navshow () {
+        }
+      },
+      data () {
+        return {
+
         }
       }
     }

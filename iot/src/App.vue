@@ -12,14 +12,14 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  /*font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   height: 100%;
   font-size: 14px;
-  height: 100%;
 }
 html, body, h1, h2, h3, h4, h5, h6, div, header, p, span, a, ul, li, table, tr, td {
   margin: 0;
@@ -31,6 +31,9 @@ a {
 }
 li {
   list-style: none;
+}
+.el-range-editor--mini.el-input__inner {
+  /*width: 280px;*/
 }
 .el-menu {
   border-right: 0;
@@ -59,14 +62,14 @@ li {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 148px;
-  height: 148px;
-  line-height: 148px;
+  width: 128px;
+  height: 128px;
+  line-height: 128px;
   text-align: center;
 }
 .avatar {
-  width: 148px;
-  height: 148px;
+  width: 128px;
+  height: 128px;
   display: block;
 }
 </style>
