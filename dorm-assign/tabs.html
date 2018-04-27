@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>录入信息-宿舍个性化分配系统（tabs版本）</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+<div id="app">
+    <main>
+        <div class="container">
+            <el-tabs type="border-card" v-model="tabname">
+                <el-tab-pane label="我是..." name="self">
+                    <div class="tab-content">
+                        <el-form ref="formSelf" :model="form" :rules="rules" label-width="120px">
+                            <el-form-item label="我的学号？">
+                                <el-input v-model="form.stu_id" placeholder="请输入学号" prop="notnull"></el-input>
+                            </el-form-item>
+                            <el-form-item label="我的姓名？">
+                                <el-input v-model="form.stu_name" placeholder="请输入姓名" prop="notnull"></el-input>
+                            </el-form-item>
+                            <el-form-item label="我来自？">
+                                <el-select v-model="form.self_origin" placeholder="请选择省份" class="full" prop="notnull">
+                                    <el-option value="北京"></el-option>
+                                    <el-option value="天津"></el-option>
+                                    <el-option value="河北"></el-option>
+                                    <el-option value="山西"></el-option>
+                                    <el-option value="内蒙古"></el-option>
+                                    <el-option value="辽宁"></el-option>
+                                    <el-option value="吉林"></el-option>
+                                    <el-option value="黑龙江"></el-option>
+                                    <el-option value="上海"></el-option>
+                                    <el-option value="江苏"></el-option>
+                                    <el-option value="浙江"></el-option>
+                                    <el-option value="安徽"></el-option>
+                                    <el-option value="福建"></el-option>
+                                    <el-option value="江西"></el-option>
+                                    <el-option value="山东"></el-option>
+                                    <el-option value="河南"></el-option>
+                                    <el-option value="湖北"></el-option>
+                                    <el-option value="湖南"></el-option>
+                                    <el-option value="广东"></el-option>
+                                    <el-option value="广西"></el-option>
+                                    <el-option value="海南"></el-option>
+                                    <el-option value="重庆"></el-option>
+                                    <el-option value="四川"></el-option>
+                                    <el-option value="贵州"></el-option>
+                                    <el-option value="云南"></el-option>
+                                    <el-option value="西藏"></el-option>
+                                    <el-option value="陕西"></el-option>
+                                    <el-option value="甘肃"></el-option>
+                                    <el-option value="青海"></el-option>
+                                    <el-option value="宁夏"></el-option>
+                                    <el-option value="新疆"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的性格？">
+                                <el-select v-model="form.self_character" placeholder="请选择性格" class="full">
+                                    <el-option value="热情外向"></el-option>
+                                    <el-option value="安静内向"></el-option>
+                                    <!--<el-option label="河北"></el-option>-->
+                                    <!--<el-option label="山西"></el-option>-->
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的睡眠习惯？">
+                                <el-select v-model="form.self_sleep" placeholder="请选择睡眠习惯" class="full">
+                                    <el-option value="10点前"></el-option>
+                                    <el-option value="10-11点"></el-option>
+                                    <el-option value="11-12点"></el-option>
+                                    <el-option value="12点后"></el-option>
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的爱好？">
+                                <el-select v-model="form.self_hobby" placeholder="请选择爱好" class="full">
+                                    <el-option value="音乐"></el-option>
+                                    <el-option value="舞蹈"></el-option>
+                                    <el-option value="运动"></el-option>
+                                    <el-option value="动漫"></el-option>
+                                    <el-option value="电影"></el-option>
+                                    <el-option value="游戏"></el-option>
+                                    <el-option value="其它"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的未来规划？">
+                                <el-select v-model="form.self_plan" placeholder="请选择未来规划" class="full">
+                                    <el-option value="读研"></el-option>
+                                    <el-option value="创业"></el-option>
+                                    <el-option value="就业"></el-option>
+                                    <el-option value="出国"></el-option>
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的住宿经验？">
+                                <el-select v-model="form.self_dormitory" placeholder="请选择住宿经验" class="full">
+                                    <el-option value="有"></el-option>
+                                    <el-option value="没有"></el-option>
+                                    <!--<el-option label="河北"></el-option>-->
+                                    <!--<el-option label="山西"></el-option>-->
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="我的优点？">
+                                <el-select v-model="form.self_merit" placeholder="请选择优点" class="full">
+                                    <el-option value="乐于助人"></el-option>
+                                    <el-option value="诚实守信"></el-option>
+                                    <el-option value="不拖延"></el-option>
+                                    <el-option value="爱交朋友"></el-option>
+                                    <el-option value="有责任感"></el-option>
+                                    <el-option value="乐观积极"></el-option>
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item class="tab-submit-btn">
+                                <el-button style="margin-left: -80px" type="primary" @click="next">下一步</el-button>
+                                <!--<el-button @click="resetForm('formSelf')">重置</el-button>-->
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="我想要..." name="req">
+                    <div class="tab-content">
+                        <el-form ref="formReq" :model="form" label-width="130px">
+                            <el-form-item label="室友来自">
+                                <el-select v-model="form.req_origin" placeholder="请选择省份" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="北京"></el-option>
+                                    <el-option value="天津"></el-option>
+                                    <el-option value="河北"></el-option>
+                                    <el-option value="山西"></el-option>
+                                    <el-option value="内蒙古"></el-option>
+                                    <el-option value="辽宁"></el-option>
+                                    <el-option value="吉林"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的性格？">
+                                <el-select v-model="form.req_character" placeholder="请选择性格" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="热情外向"></el-option>
+                                    <el-option value="安静内向"></el-option>
+                                    <!--<el-option label="河北"></el-option>-->
+                                    <!--<el-option label="山西"></el-option>-->
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的睡眠习惯？">
+                                <el-select v-model="form.req_sleep" placeholder="请选择睡眠习惯" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="10点前"></el-option>
+                                    <el-option value="10-11点"></el-option>
+                                    <el-option value="11-12点"></el-option>
+                                    <el-option value="12点后"></el-option>
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的爱好？">
+                                <el-select v-model="form.req_hobby" placeholder="请选择爱好" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="音乐"></el-option>
+                                    <el-option value="舞蹈"></el-option>
+                                    <el-option value="运动"></el-option>
+                                    <el-option value="动漫"></el-option>
+                                    <el-option value="电影"></el-option>
+                                    <el-option value="游戏"></el-option>
+                                    <el-option value="其它"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的未来规划？">
+                                <el-select v-model="form.req_plan" placeholder="请选择未来规划" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="读研"></el-option>
+                                    <el-option value="创业"></el-option>
+                                    <el-option value="就业"></el-option>
+                                    <el-option value="出国"></el-option>
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的住宿经验？">
+                                <el-select v-model="form.req_dormitory" placeholder="请选择住宿经验" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="有"></el-option>
+                                    <el-option value="没有"></el-option>
+                                    <!--<el-option label="河北"></el-option>-->
+                                    <!--<el-option label="山西"></el-option>-->
+                                    <!--<el-option label="内蒙古"></el-option>-->
+                                    <!--<el-option label="辽宁"></el-option>-->
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="室友的优点？">
+                                <el-select v-model="form.req_merit" placeholder="请选择优点" class="full">
+                                    <el-option value="无要求"></el-option>
+                                    <el-option value="乐于助人"></el-option>
+                                    <el-option value="诚实守信"></el-option>
+                                    <el-option value="不拖延"></el-option>
+                                    <el-option value="爱交朋友"></el-option>
+                                    <el-option value="有责任感"></el-option>
+                                    <el-option value="乐观积极"></el-option>
+                                    <!--<el-option label="吉林"></el-option>-->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item class="tab-submit-btn">
+                                <el-button style="margin-left: -80px" @click="back">返回</el-button>
+                                <el-button type="primary" @click="onSubmit">提交</el-button>
+                                <el-button @click="reset">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </el-tab-pane>
+                <!--<el-tab-pane label="角色管理">角色管理</el-tab-pane>-->
+                <!--<el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>-->
+            </el-tabs>
+        </div>
+    </main>
+</div>
+<!-- 引入组件库 -->
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
